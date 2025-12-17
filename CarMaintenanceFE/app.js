@@ -22,7 +22,7 @@ const SERVICE_TYPES = {
 
 function logout() {
     localStorage.removeItem("loggedUser");
-    window.location.href = "login.html";
+    window.location.href = "index.html";
 }
 
 /* ===================== HELPERS ===================== */
@@ -380,3 +380,4 @@ function populateCarSelects() {
     populateCarSelect(maintenanceCarSelect, false);
     populateCarSelect(quickInfoCarSelect, true);
 }
+
