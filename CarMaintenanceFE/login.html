@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | Car Maintenance History</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+<div class="login-container">
+    <h1>Car Maintenance History</h1>
+
+    <!-- LOGIN CARD -->
+    <div class="login-card" id="loginCard">
+        <h2>Login</h2>
+
+        <input type="text" id="username" placeholder="Username" />
+        <input type="password" id="password" placeholder="Password" />
+
+        <button id="loginBtn">Login</button>
+        <b>_______________________________</b>
+        <button id="registerBtn">Register</button>
+
+        <p id="errorMsg" class="error hidden"></p>
+    </div>
+
+    <!-- REGISTER CARD -->
+    <div class="login-card hidden" id="registerCard">
+        <h2>Register</h2>
+
+        <input type="text" id="regUsername" placeholder="Username" />
+        <input type="password" id="regPassword" placeholder="Password" />
+        <input type="password" id="regConfirmPassword" placeholder="Confirm Password" />
+
+        <button id="submitRegisterBtn">Create Account</button>
+        <b>_______________________________</b>
+        <button id="backToLoginBtn">Back to Login</button>
+
+        <p id="registerErrorMsg" class="error hidden"></p>
+    </div>
+</div>
+
+<script src="login.js"></script>
+</body>
+</html>

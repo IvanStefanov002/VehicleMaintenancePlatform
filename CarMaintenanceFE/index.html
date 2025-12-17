@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Maintenance App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+    <h1 class="app-title">
+        🔧 Електронен справочник за поддръжка на автомобили
+    </h1>
+
+    <div class="user-info">
+        <span id="usernameLabel"></span>
+        <button id="logout-button" onclick="logout()">Log Out</button>
+    </div>
+</header>
+
+<nav id="sideMenu" class="side-menu">
+    <ul>
+        <li onclick="showSection('carsPage')">🚗 Автомобили</li>
+        <li onclick="showSection('addCarPage')">➕ Добаване на автомобил</li>
+                <b>_________________________________</b>
+        <li onclick="showSection('addMaintenancePage')">🛠 Добавяне на сервизна история</li>
+        <li onclick="showSection('maintenancePage')">📋 Сервизни истории</li>
+        <li onclick="showSection('quickInfoPage')">ℹ️ Quick information</li>
+    </ul>
+</nav>
+
+<main class="content">
+
+    <!-- CARS LIST -->
+    <section id="carsPage" class="page">
+        <h2>--Автомобили--</h2>
+        <ul id="carList" class="list"></ul>
+    </section>
+
+    <!-- ADD CAR -->
+    <section id="addCarPage" class="page hidden">
+        <h2>--Добавяне на автомобил--</h2>
+
+        <div class="form-row">
+            <input id="brand" placeholder="Марка">
+            <input id="model" placeholder="Модел">
+        </div>
+        <div class="form-row">
+            <input id="year" type="number" placeholder="Година на производство">
+            <input id="carMileage" placeholder="Киометри">
+            <input id="vin" placeholder="VIN">
+        </div>
+
+        <button onclick="addCar()">Добави</button>
+    </section>
+
+    <!-- ADD MAINTENANCE -->
+    <section id="addMaintenancePage" class="page hidden">
+        <h2>--Добавяне на сервизна история--</h2>
+
+        <select id="maintenanceCarSelect"></select>
+
+        <div class="form-row">
+            <input id="serviceDate" type="date">
+            <input id="mileage" type="number" placeholder="Киометри">
+        </div>
+
+        <div>
+            <div class="service-types">
+                <p><strong>Вид сервиз:</strong></p>
+
+                <label>
+                    <input type="checkbox" class="service-checkbox" value="Масло двигател">
+                    Масло двигател
+                </label>
+
+                <label>
+                    <input type="checkbox" class="service-checkbox" value="Маслен филтър">
+                    Маслен филтър
+                </label>
+
+                <label>
+                    <input type="checkbox" class="service-checkbox" value="Въздушен филтър">
+                    Въздушен филтър
+                </label>
+
+                <label>
+                    <input type="checkbox" class="service-checkbox" value="Горивен филтър">
+                    Горивен филтър
+                </label>
+
+                <label>
+                    <input type="checkbox" class="service-checkbox" value="Филтър купе">
+                    Филтър купе
+                </label>
+
+                <label>
+                    <input type="checkbox" id="customDescCheckbox" onchange="toggleCustomDescription()">
+                    Друго
+                </label>
+
+                <input
+                    id="customDescription"
+                    type="text"
+                    placeholder="Свободно описание"
+                    disabled
+                >
+            </div>
+
+            <input id="cost" type="number" placeholder="Стойност">
+            <input id="nextServiceAt" type="number" placeholder="Следваща смяна(км.)">
+        </div>
+
+        <p><strong>Забележка:</strong> Можеш да оставиш празно полето <strong>"следваща смяна"</strong> за автоматично изчисление.</p>
+
+        <button onclick="addMaintenance()">Добави</button>
+    </section>
+
+    <!-- VIEW MAINTENANCE -->
+    <section id="maintenancePage" class="page hidden">
+        <h2>--Сервизна история--</h2>
+
+        <div id="maintenance-header-div">
+            <select id="maintenanceViewCarSelect" onchange="loadMaintenanceForSelectedCar()">
+                <option value="">Избери автомобил</option>
+            </select>
+            <button id="maintenance-refresh-button" onclick="loadMaintenanceForSelectedCar()">Обнови резултатите</button>
+        </div>
+
+        <table class="maintenance-table">
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Описание</th>
+                    <th>Пробег</th>
+                    <th>Стойност</th>
+                    <th>Следваща смяна</th>
+                </tr>
+            </thead>
+            <tbody id="maintenanceList">
+                <!-- rows inserted dynamically -->
+            </tbody>
+        </table>
+
+    </section>
+
+    <!-- quick info page -->
+    <section id="quickInfoPage" class="page hidden">
+        <h2>Quick Information</h2>
+
+        <select id="quickInfoCarSelect" onchange="loadQuickInfo()"></select>
+
+        <!-- CURRENT MILEAGE -->
+        <div id="currentMileage" class="current-mileage hidden">
+            Текущи киометри: <strong><span id="currentMileageValue"></span> км</strong>
+        </div>
+
+        <div id="quickInfoGrid" class="quick-info-grid"></div>
+    </section>
+
+
+</main>
+
+
+<script src="app.js"></script>
+</body>
+</html>
