@@ -42,7 +42,7 @@ function login() {
             username: data.username
         }));
 
-        window.location.href = "index.html";
+        window.location.href = "mainPage.html";
     })
     .catch(error => {
         errorMsg.textContent = "Login failed. Check username or password.";
@@ -96,14 +96,6 @@ function submitRegister() {
             alert("Successful registration!")
         }
     })
-    // .then(data => {
-    //     /* store to local storage */
-    //     localStorage.setItem("loggedUser", JSON.stringify({
-    //         username: data.username
-    //     }));
-
-    //     window.location.href = "index.html";
-    // })
     .catch(error => {
         errorMsg.textContent = "Login failed. Check username or password.";
         errorMsg.classList.remove("hidden");
@@ -112,3 +104,4 @@ function submitRegister() {
     // Optional: go back to login
     showLogin();
 }
+
