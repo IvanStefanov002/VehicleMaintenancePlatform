@@ -1,3 +1,5 @@
+requireAuth(); //require auth for access
+
 // const API_URL = "http://localhost:8080";
 const API_URL = "https://vehiclemaintenanceplatform.onrender.com";
 
