@@ -8,4 +8,5 @@ public class CarUpdateRequest {
     private String model;
     private Integer year;
     private String vin;
+    private String mileage;
 }

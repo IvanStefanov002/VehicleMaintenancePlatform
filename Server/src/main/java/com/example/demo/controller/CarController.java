@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -57,6 +58,15 @@ public class CarController {
     ) {
         return service.update(id, request);
     }
+
+    @PutMapping("/{id}/mileage")
+    public CarResponse updateMileage(
+            @PathVariable String id,
+            @RequestBody CarUpdateRequest request
+    ) {
+        return service.update(id, request);
+    }
+
 
     @DeleteMapping("/{id}")
     public MessageResponse delete(@PathVariable String id) {

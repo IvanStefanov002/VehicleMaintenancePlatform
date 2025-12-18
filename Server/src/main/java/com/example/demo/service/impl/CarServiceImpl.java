@@ -64,10 +64,26 @@ public class CarServiceImpl implements CarService {
         if (request.getModel() != null) car.setModel(request.getModel());
         if (request.getYear() != null) car.setYear(request.getYear());
         if (request.getVin() != null) car.setVin(request.getVin());
+        if (request.getMileage() != null) car.setMileage(request.getMileage());
 
         Car saved = repository.save(car);
         return toResponse(saved);
     }
+
+//    /* update car data */
+//    @Override
+//    public CarResponse update(String id, CarUpdateRequest request) {
+//        Car car = repository.findById(id)
+//                .orElseThrow(() -> new NotFoundException("Car not found"));
+//
+//        if (request.getBrand() != null) car.setBrand(request.getBrand());
+//        if (request.getModel() != null) car.setModel(request.getModel());
+//        if (request.getYear() != null) car.setYear(request.getYear());
+//        if (request.getVin() != null) car.setVin(request.getVin());
+//
+//        Car saved = repository.save(car);
+//        return toResponse(saved);
+//    }
 
     /* delete a car */
     @Override
