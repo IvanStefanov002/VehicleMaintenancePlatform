@@ -54,7 +54,7 @@
 
             <div class="form-row">
                 <input id="year" type="number" placeholder="Година на производство">
-                <input id="carMileage" placeholder="Киометри">
+                <input id="carMileage" placeholder="Километри">
                 <input id="vin" placeholder="VIN">
             </div>
 
@@ -65,15 +65,15 @@
         <section id="addMaintenancePage" class="page hidden">
             <h2>--Добавяне на сервизна история--</h2>
 
-            <p>
+            <!-- <p>
                 <strong>Забележка:</strong>
                 Можеш да добавяш история само на автомобили, които са твои.
-            </p>
-            <a>Избери автомобил: </a><select id="maintenanceCarSelect"></select>
+            </p> -->
+            <select id="maintenanceCarSelect"></select>
 
             <div class="form-row">
                 <input id="serviceDate" type="date">
-                <input id="mileage" type="number" placeholder="Киометри">
+                <input id="mileage" type="number" placeholder="Километри">
             </div>
 
             <div class="service-types">
@@ -114,7 +114,6 @@
 
             <div id="maintenance-header-div">
                 <div id="maintenance-header-inner-div">
-                    <a>Избери автомобил: </a>
                     <select id="maintenanceViewCarSelect" onchange="loadMaintenanceForSelectedCar()"></select>
                 </div>
                 <button onclick="loadMaintenanceForSelectedCar()">Обнови резултатите</button>
@@ -153,7 +152,7 @@
 
     </main>
 
-    <!-- обновяване на киометри popup modal -->
+    <!-- обновяване на километри popup modal -->
     <div id="mileageModal" class="modal hidden">
         <div class="modal-content">
             <h3>Обновяване на километри</h3>

@@ -88,6 +88,8 @@ function buildDescription() {
 /* ===================== ON LOAD ===================== */
 window.onload = () => {
     loadCars();
+    renderQuickCards({});
+    loadMaintenanceForSelectedCar();
 };
 
 /* ===================== ADD ===================== */
@@ -172,7 +174,7 @@ function loadMaintenanceForSelectedCar() {
     const list = document.getElementById("maintenanceList");
 
     if (!carId) {
-        list.innerHTML = "";
+        list.innerHTML = `<tr><td colspan="5">Няма записи</td></tr>`;
         return;
     }
 
@@ -212,10 +214,9 @@ function loadQuickInfo() {
     const mileageBox = document.getElementById("currentMileage");
     const mileageValue = document.getElementById("currentMileageValue");
 
-    grid.innerHTML = "";
-
     if (!carId) {
         mileageBox.classList.add("hidden");
+        renderQuickCards({});
         return;
     }
 
@@ -390,12 +391,13 @@ function populateCarSelect(
         opt.value = car.id;
 
         const isOwner = car.owner === loggedUser.username;
-
+        
         opt.textContent = `${car.brand} ${car.model}`;
 
         if (restrictToOwner && !isOwner) {
-            opt.disabled = true;          // ❌ само тук не се клика
-            opt.style.color = "#9ca3af";  // визуален hint
+            //opt.disabled = true;
+            //opt.style.color = "#9ca3af";
+            opt.hidden = true;
         }
 
         select.appendChild(opt);
@@ -403,19 +405,14 @@ function populateCarSelect(
 }
 
 function populateCarSelects() {
-    // View maintenance → всички коли
-    populateCarSelect(maintenanceViewCarSelect, true);
+    // note: function populateCarSelect(select: any, includeDefault?: boolean, defaultText?: string, restrictToOwner?: boolean): void
 
-    // Add maintenance → САМО собствени коли selectable
-    populateCarSelect(
-        maintenanceCarSelect,
-        true,
-        "Избери автомобил",
-        true   // restrictToOwner
-    );
-
-    // Quick info → всички коли
-    populateCarSelect(quickInfoCarSelect, true);
+    // View maintenance tab
+    populateCarSelect( maintenanceViewCarSelect, true, "Избери автомобил", true );
+    // Add maintenance tab
+    populateCarSelect( maintenanceCarSelect, true, "Избери автомобил", true );
+    // Quick info tab
+    populateCarSelect( quickInfoCarSelect, true, "Избери автомобил", true );
 }
 
 /* update mileage */
