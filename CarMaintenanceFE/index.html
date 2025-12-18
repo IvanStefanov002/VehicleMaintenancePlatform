@@ -3,43 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <title>Login | Car Maintenance History</title>
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
 <div class="login-container">
-    <h1>Car Maintenance History</h1>
+    <h1>Електронен сервизен</h1>
+    <h1>дневник за автомобили</h1>
 
     <!-- LOGIN CARD -->
     <div class="login-card" id="loginCard">
-        <h2>Login</h2>
+        <h2>Вписане</h2>
 
-        <input type="text" id="username" placeholder="Username" />
-        <input type="password" id="password" placeholder="Password" />
+        <input type="text" id="username" placeholder="Потребител" />
+        <input type="password" id="password" placeholder="Парола" />
 
-        <button id="loginBtn">Login</button>
+        <button id="loginBtn">Влез</button>
         <b>_______________________________</b>
-        <button id="registerBtn">Register</button>
+        <button id="registerBtn">Регистрация</button>
 
         <p id="errorMsg" class="error hidden"></p>
     </div>
 
     <!-- REGISTER CARD -->
     <div class="login-card hidden" id="registerCard">
-        <h2>Register</h2>
+        <h2>Регистрация</h2>
 
-        <input type="text" id="regUsername" placeholder="Username" />
-        <input type="password" id="regPassword" placeholder="Password" />
-        <input type="password" id="regConfirmPassword" placeholder="Confirm Password" />
+        <input type="text" id="regUsername" placeholder="Потребител" />
+        <input type="password" id="regPassword" placeholder="Парола" />
+        <input type="password" id="regConfirmPassword" placeholder="Повтори парола" />
 
-        <button id="submitRegisterBtn">Create Account</button>
+        <button id="submitRegisterBtn">Създвай</button>
         <b>_______________________________</b>
-        <button id="backToLoginBtn">Back to Login</button>
+        <button id="backToLoginBtn">Назад</button>
 
         <p id="registerErrorMsg" class="error hidden"></p>
     </div>
 </div>
 
-<script src="login.js"></script>
+<script src="index.js"></script>
 </body>
 </html>
