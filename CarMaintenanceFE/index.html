@@ -18,7 +18,8 @@
         <input type="text" id="username" placeholder="Потребител" />
         <input type="password" id="password" placeholder="Парола" />
 
-        <button id="loginBtn">Влез</button>
+        <button id="loginBtn" onclick="login()">Влез</button>
+        <div id="loginLoader" class="loader hidden"></div>
         <b>_______________________________</b>
         <button id="registerBtn">Регистрация</button>
 
@@ -33,7 +34,7 @@
         <input type="password" id="regPassword" placeholder="Парола" />
         <input type="password" id="regConfirmPassword" placeholder="Повтори парола" />
 
-        <button id="submitRegisterBtn">Създвай</button>
+        <button id="submitRegisterBtn">Създай</button>
         <b>_______________________________</b>
         <button id="backToLoginBtn">Назад</button>
 

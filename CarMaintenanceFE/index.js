@@ -7,9 +7,14 @@ document.getElementById("backToLoginBtn").addEventListener("click", showLogin);
 document.getElementById("submitRegisterBtn").addEventListener("click", submitRegister);
 
 function login() {
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value.trim();
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
     const errorMsg = document.getElementById("errorMsg");
+    const loginBtn = document.getElementById("loginBtn");
+    const loader = document.getElementById("loginLoader");
+
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value.trim();
 
     errorMsg.classList.add("hidden");
     errorMsg.textContent = "";
@@ -19,6 +24,11 @@ function login() {
         errorMsg.classList.remove("hidden");
         return;
     }
+
+    // 🔄 show loading state
+    loader.classList.remove("hidden");
+    loginBtn.disabled = true;
+    loginBtn.textContent = "Моля изчакайте...";
 
     fetch(`${API_URL}/users/login`, {
         method: "POST",
@@ -34,19 +44,24 @@ function login() {
         if (!response.ok) {
             throw new Error("Invalid credentials");
         }
-        return response.json(); // optional, if backend returns JSON
+        return response.json();
     })
     .then(data => {
-        /* store to local storage */
+        // store logged user
         localStorage.setItem("loggedUser", JSON.stringify({
             username: data.username
         }));
-        
+
         window.location.href = "mainPage.html";
     })
     .catch(error => {
         errorMsg.textContent = "Login failed. Check username or password.";
         errorMsg.classList.remove("hidden");
+
+        // 🔁 restore UI
+        loader.classList.add("hidden");
+        loginBtn.disabled = false;
+        loginBtn.textContent = "Влез";
     });
 }
 

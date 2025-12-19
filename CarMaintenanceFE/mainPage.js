@@ -96,6 +96,10 @@ window.onload = () => {
 
 /* ===================== ADD ===================== */
 function addCar() {
+    const errorMsg = document.getElementById("addCarErrorMsg");
+    errorMsg.classList.add("hidden");
+    errorMsg.textContent = "";
+
     const car = {
         owner: loggedUser.username,
         brand: brand.value,
@@ -110,11 +114,16 @@ function addCar() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(car)
     })
-    .then(() => {
+    .then(response => {
+        if (!response.ok) {
+            errorMsg.textContent = "Всички полета са задължителни!";
+            errorMsg.classList.remove("hidden");
+            throw new Error("Add vehicle error!");
+        }
         alert("Успешно добавено превозно средство");
         loadCars();
         showSection("carsPage");
-    });
+    })
 }
 
 function addMaintenance() {
