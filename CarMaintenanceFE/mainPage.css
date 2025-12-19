@@ -178,6 +178,41 @@ button:hover {
     background: #b91c1c;
 }
 
+#notice-maintenance-page {
+    margin: 10px 10px 10px 0px;
+}
+
+.info-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #2c7be5;
+    padding: 0px;
+}
+
+.info-btn:hover {
+    background-color: transparent;
+    font-weight: bold;
+}
+
+/* modal info button */
+.maintenance-list {
+    padding-left: 18px;
+    margin: 15px 0;
+}
+
+.maintenance-list li {
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.maintenance-note {
+    font-size: 13px;
+    color: #666;
+    margin-top: 10px;
+}
+
 .maintenance-table {
     width: 100%;
     border-collapse: collapse;

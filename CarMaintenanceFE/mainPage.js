@@ -434,6 +434,15 @@ function populateCarSelects() {
     populateCarSelect( quickInfoCarSelect, true, "Избери МПС", true );
 }
 
+/* info add maintenance */
+function openInfoMaintenanceModal() {
+    document.getElementById("infoMaintenanceModal").classList.remove("hidden");
+}
+
+function closeInfoMaintenanceModal() {
+    document.getElementById("infoMaintenanceModal").classList.add("hidden");
+}
+
 /* update mileage */
 function openMileageModal() {
     document.getElementById("newMileageInput").value = "";

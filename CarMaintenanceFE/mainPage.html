@@ -102,11 +102,14 @@
             <input id="cost" type="number" placeholder="Стойност">
             <input id="nextServiceAt" type="number" placeholder="Следваща смяна (км.)">
 
-            <p>
-                <strong>Забележка:</strong>
-                Можеш да оставиш празно полето <strong>"следваща смяна"</strong>
-                за автоматично изчисление.
-            </p>
+            <div id="notice-maintenance-page">
+                <a>
+                    <strong>Забележка:</strong>
+                    Можеш да оставиш празно полето <strong>"следваща смяна"</strong>
+                    за автоматично изчисление.
+                </a>
+                <button class="info-btn" aria-label="Информация" onclick="openInfoMaintenanceModal()">ⓘ</button>
+            </div>
 
             <button onclick="addMaintenance()">Добави</button>
         </section>
@@ -170,6 +173,42 @@
             <div class="modal-actions">
                 <button onclick="closeMileageModal()">Отказ</button>
                 <button onclick="submitMileageUpdate()">Запази</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- info button add maintenance history -->
+    <div id="infoMaintenanceModal" class="modal hidden">
+        <div class="modal-content">
+            <!-- <h3>Препоръчителни сервизни интервали</h3> -->
+
+            <p>За да поддържате автомобила си в добро състояние, препоръчваме следните сервизни интервали:</p>
+
+            <ul class="maintenance-list">
+                <li>
+                    <strong>На всеки 10 000 км</strong><br>
+                    двигателно масло, маслен филтър
+                </li>
+                <li>
+                    <strong>На всеки 20 000 км</strong><br>
+                    въздушен филтър, филтър купе
+                </li>
+                <li>
+                    <strong>На всеки 30 000 км</strong><br>
+                    горивен филтър
+                </li>
+                <li>
+                    <strong>На всеки ~60 000 км</strong><br>
+                    масло скоростна кутия(автомачна)
+                </li>
+            </ul>
+
+            <p class="maintenance-note">
+                Интервалите са ориентировъчни и могат да варират според начина на шофиране и препоръките на производителя.
+            </p>
+
+            <div class="modal-actions">
+                <button onclick="closeInfoMaintenanceModal()">Затвори</button>
             </div>
         </div>
     </div>
