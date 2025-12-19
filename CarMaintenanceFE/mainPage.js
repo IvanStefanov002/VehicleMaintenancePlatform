@@ -349,41 +349,49 @@ function renderCarList() {
     const list = document.getElementById("carList");
     list.innerHTML = "";
 
-    cars.forEach(car => {
-        const li = document.createElement("li");
-        li.className = "car-item";
+    cars
+        .slice() // 🔒 avoid mutating original array
+        .sort((a, b) => {
+            const aIsMine = a.owner === loggedUser.username;
+            const bIsMine = b.owner === loggedUser.username;
 
-        const info = document.createElement("div");
-        info.className = "car-info";
-        info.innerHTML = `
-            <span class="car-title">${car.brand} ${car.model} (${car.year})</span>
-            <span class="car-owner">👤 ${car.owner ?? "Unknown"}</span>
-        `;
+            return bIsMine - aIsMine; // my cars first
+        })
+        .forEach(car => {
+            const li = document.createElement("li");
+            li.className = "car-item";
 
-        li.appendChild(info);
+            const info = document.createElement("div");
+            info.className = "car-info";
+            info.innerHTML = `
+                <span class="car-title">${car.brand} ${car.model} (${car.year})</span>
+                <span class="car-owner">👤 ${car.owner ?? "Unknown"}</span>
+            `;
 
-        // ✅ Delete button ONLY for owner
-        if (car.owner === loggedUser.username) {
-            const delBtn = document.createElement("button");
-            delBtn.className = "delete-btn";
-            delBtn.textContent = "🗑 Delete";
-            delBtn.onclick = e => {
-                e.stopPropagation();
-                deleteCar(car.id);
-            };
+            li.appendChild(info);
 
-            li.appendChild(delBtn);
-        }
+            // ✅ Delete button ONLY for owner
+            if (car.owner === loggedUser.username) {
+                const delBtn = document.createElement("button");
+                delBtn.className = "delete-btn";
+                delBtn.textContent = "🗑 Премахни";
+                delBtn.onclick = e => {
+                    e.stopPropagation();
+                    deleteCar(car.id);
+                };
 
-        list.appendChild(li);
-    });
+                li.appendChild(delBtn);
+            }
+
+            list.appendChild(li);
+        });
 }
 
 /* ===================== SELECT HELPERS ===================== */
 function populateCarSelect(
     select,
     includeDefault = true,
-    defaultText = "Избери автомобил",
+    defaultText = "Избери МПС",
     restrictToOwner = false
 ) {
     if (!select) return;
@@ -419,11 +427,11 @@ function populateCarSelects() {
     // note: function populateCarSelect(select: any, includeDefault?: boolean, defaultText?: string, restrictToOwner?: boolean): void
 
     // View maintenance tab
-    populateCarSelect( maintenanceViewCarSelect, true, "Избери автомобил", true );
+    populateCarSelect( maintenanceViewCarSelect, true, "Избери МПС", true );
     // Add maintenance tab
-    populateCarSelect( maintenanceCarSelect, true, "Избери автомобил", true );
+    populateCarSelect( maintenanceCarSelect, true, "Избери МПС", true );
     // Quick info tab
-    populateCarSelect( quickInfoCarSelect, true, "Избери автомобил", true );
+    populateCarSelect( quickInfoCarSelect, true, "Избери МПС", true );
 }
 
 /* update mileage */

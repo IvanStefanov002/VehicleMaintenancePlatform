@@ -25,8 +25,8 @@
     <!-- ================ SIDE MENU ================ -->
     <nav id="sideMenu" class="side-menu">
         <ul>
-            <li onclick="showSection('carsPage')">🚗 Автомобили</li>
-            <li onclick="showSection('addCarPage')">➕ Добавяне на автомобил</li>
+            <li onclick="showSection('carsPage')">🚗 Гараж</li>
+            <li onclick="showSection('addCarPage')">➕ Добавяне на МПС</li>
             <b>_________________________________</b>
             <li onclick="showSection('addMaintenancePage')">🛠 Добавяне на сервизна история</li>
             <li onclick="showSection('maintenancePage')">📋 Сервизни истории</li>
@@ -39,13 +39,14 @@
 
         <!-- CARS LIST -->
         <section id="carsPage" class="page">
-            <h2>--Автомобили--</h2>
+            <h2>●● Гараж ●●</h2>
+            <a><strong>Забележка:</strong> Показват се всички превозни средства в системата.</a>
             <ul id="carList" class="list"></ul>
         </section>
 
         <!-- ADD CAR -->
         <section id="addCarPage" class="page hidden">
-            <h2>--Добавяне на автомобил--</h2>
+            <h2>●● Добавяне на МПС ●●</h2>
 
             <p id="addCarErrorMsg" class="error hidden" style="color: red; font-weight: bold;"></p>
 
@@ -65,7 +66,7 @@
 
         <!-- ADD MAINTENANCE -->
         <section id="addMaintenancePage" class="page hidden">
-            <h2>--Добавяне на сервизна история--</h2>
+            <h2>●● Добавяне на сервизна история ●●</h2>
 
             <!-- <p>
                 <strong>Забележка:</strong>
@@ -112,7 +113,7 @@
 
         <!-- VIEW MAINTENANCE -->
         <section id="maintenancePage" class="page hidden">
-            <h2>--Сервизна история--</h2>
+            <h2>●● Сервизна история ●●</h2>
 
             <div id="maintenance-header-div">
                 <div id="maintenance-header-inner-div">
@@ -137,7 +138,7 @@
 
         <!-- QUICK INFO -->
         <section id="quickInfoPage" class="page hidden">
-            <h2>--Основна информация--</h2>
+            <h2>●● Основна информация ●●</h2>
 
             <select id="quickInfoCarSelect" onchange="loadQuickInfo()"></select>
             <div id="currentMileage" class="current-mileage hidden">

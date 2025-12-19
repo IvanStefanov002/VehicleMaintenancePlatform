@@ -55,7 +55,7 @@ function login() {
         window.location.href = "mainPage.html";
     })
     .catch(error => {
-        errorMsg.textContent = "Login failed. Check username or password.";
+        errorMsg.textContent = "Неуспешно вписане. Провери данните!";
         errorMsg.classList.remove("hidden");
 
         // 🔁 restore UI
