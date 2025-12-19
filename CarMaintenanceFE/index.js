@@ -85,13 +85,13 @@ function submitRegister() {
     errorMsg.textContent = "";
 
     if (!username || !password || !confirm) {
-        errorMsg.textContent = "All fields are required.";
+        errorMsg.textContent = "Всички полета са задължителни.";
         errorMsg.classList.remove("hidden");
         return;
     }
 
     if (password !== confirm) {
-        errorMsg.textContent = "Passwords do not match.";
+        errorMsg.textContent = "Паролите не съвпадат.";
         errorMsg.classList.remove("hidden");
         return;
     }
@@ -104,7 +104,7 @@ function submitRegister() {
     .then(async response => {
         if (!response.ok) {
             const text = await response.text();
-            throw new Error(text || "Registration failed");
+            throw new Error(text || "Неуспешна регистрация.");
         }
         return response.json(); // 👈 важно
     })
@@ -118,7 +118,7 @@ function submitRegister() {
         window.location.href = "mainPage.html";
     })
     .catch(err => {
-        errorMsg.textContent = err.message || "Registration failed.";
+        errorMsg.textContent = "Потребителското име е заето";
         errorMsg.classList.remove("hidden");
     });
 }
