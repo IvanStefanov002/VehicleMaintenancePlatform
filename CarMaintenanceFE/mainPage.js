@@ -313,14 +313,14 @@ function renderQuickCards(latest) {
     grid.innerHTML = "";
 
     const labels = {
-        oil: "🛢 Масло",
+        oil: "🛢 Двигателно масло",
         oilFilter: "🔧 Маслен филтър",
         airFilter: "🌬 Въздушен филтър",
         fuelFilter: "⛽ Горивен филтър",
         cabinFilter: "🧼 Филтър купе",
+        gearboxOil: "⚙ Масло скоростна кутия",
         brakeDiscs: "🛑 Спирачни дискове",
         brakePads: "🛞 Спирачни накладки",
-        gearboxOil: "⚙ Масло скоростна кутия",
     };
 
     Object.entries(labels).forEach(([key, label]) => {
