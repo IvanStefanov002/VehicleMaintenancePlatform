@@ -47,6 +47,10 @@ public class UserServiceImpl implements UserService {
     /* create user record */
     @Override
     public UserResponse create(UserRequest request) {
+        if (repository.findByUsername(request.getUsername()).isPresent()) {
+            throw new RuntimeException("Username already exists");
+        }
+
         String rawPassword = request.getPassword();
         String hashPassword = passwordEncoder.encode(rawPassword);
 
