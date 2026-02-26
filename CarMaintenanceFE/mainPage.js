@@ -48,14 +48,37 @@ function detectServices(description) {
 
 /* ===================== NAVIGATION ===================== */
 function toggleMenu() {
-    document.getElementById("sideMenu").classList.toggle("open");
+    const menu = document.getElementById("sideMenu");
+    const overlay = document.querySelector(".menu-overlay");
+
+    menu.classList.toggle("open");
+    overlay.classList.toggle("show");
 }
 
 function showSection(id) {
+    // hide all sections
     document.querySelectorAll(".page").forEach(p => p.classList.add("hidden"));
-    document.getElementById(id).classList.remove("hidden");
-    toggleMenu();
+
+    // show selected section
+    const sec = document.getElementById(id);
+    if (sec) sec.classList.remove("hidden");
+
+    // close mobile menu if open
+    const menu = document.getElementById("sideMenu");
+    const overlay = document.querySelector(".menu-overlay");
+    if (menu.classList.contains("open")) {
+        menu.classList.remove("open");
+        overlay.classList.remove("show");
+    }
 }
+
+/* Attach click handlers dynamically (optional) */
+document.querySelectorAll(".side-menu li[data-section]").forEach(item => {
+    item.addEventListener("click", () => {
+        const target = item.getAttribute("data-section");
+        showSection(target);
+    });
+});
 
 function toggleCustomDescription() {
     const input = document.getElementById("customDescription");
