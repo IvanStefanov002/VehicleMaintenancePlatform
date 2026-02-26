@@ -10,6 +10,7 @@
 
 <!-- ================= HEADER ================= -->
 <header class="header">
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
     <h1 class="app-title">
         🔧 Електронен справочник за поддръжка на автомобили
     </h1>
@@ -24,14 +25,15 @@
 <div class="app-layout">
 
     <!-- ================ SIDE MENU ================ -->
+    <div class="menu-overlay" onclick="toggleMenu()"></div>
     <nav id="sideMenu" class="side-menu">
         <ul>
-            <li onclick="showSection('carsPage')">🚗 Автомобили</li>
-            <li onclick="showSection('addCarPage')">➕ Добавяне на автомобил</li>
+            <li data-section="carsPage">🚗 Автомобили</li>
+            <li data-section="addCarPage">➕ Добавяне на автомобил</li>
             <b>_________________________________</b>
-            <li onclick="showSection('addMaintenancePage')">🛠 Добавяне на сервизна история</li>
-            <li onclick="showSection('maintenancePage')">📋 Сервизни истории</li>
-            <li onclick="showSection('quickInfoPage')">ℹ️ Основна информация</li>
+            <li data-section="addMaintenancePage">🛠 Добавяне на сервизна история</li>
+            <li data-section="maintenancePage">📋 Сервизни истории</li>
+            <li data-section="quickInfoPage">ℹ️ Основна информация</li>
         </ul>
     </nav>
 
