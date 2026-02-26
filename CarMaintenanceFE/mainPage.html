@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <title>Car Maintenance App</title>
+    <link rel="stylesheet" href="mainPage.css">
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="header">
+    <h1 class="app-title">
+        🔧 Електронен справочник за поддръжка на автомобили
+    </h1>
+
+    <div class="user-info">
+        <span id="usernameLabel"></span>
+        <button id="logout-button" onclick="logout()">Log Out</button>
+    </div>
+</header>
+
+<!-- ================ MAIN LAYOUT ================ -->
+<div class="app-layout">
+
+    <!-- ================ SIDE MENU ================ -->
+    <nav id="sideMenu" class="side-menu">
+        <ul>
+            <li onclick="showSection('carsPage')">🚗 Гараж</li>
+            <li onclick="showSection('addCarPage')">➕ Добавяне на МПС</li>
+            <b>_________________________________</b>
+            <li onclick="showSection('addMaintenancePage')">🛠 Добавяне на сервизна история</li>
+            <li onclick="showSection('maintenancePage')">📋 Сервизни истории</li>
+            <li onclick="showSection('quickInfoPage')">ℹ️ Основна информация</li>
+        </ul>
+    </nav>
+
+    <!-- ================= CONTENT ================= -->
+    <main class="content">
+
+        <!-- CARS LIST -->
+        <section id="carsPage" class="page">
+            <h2>●● Гараж ●●</h2>
+            <a><strong>Забележка:</strong> Показват се всички превозни средства в системата.</a>
+            <ul id="carList" class="list"></ul>
+        </section>
+
+        <!-- ADD CAR -->
+        <section id="addCarPage" class="page hidden">
+            <h2>●● Добавяне на МПС ●●</h2>
+
+            <p id="addCarErrorMsg" class="error hidden" style="color: red; font-weight: bold;"></p>
+
+            <div class="form-row">
+                <input id="brand" placeholder="Марка">
+                <input id="model" placeholder="Модел">
+            </div>
+
+            <div class="form-row">
+                <input id="year" type="number" placeholder="Година на производство">
+                <input id="carMileage" placeholder="Километри">
+                <input id="vin" placeholder="VIN">
+            </div>
+
+            <button onclick="addCar()">Добави</button>
+        </section>
+
+        <!-- ADD MAINTENANCE -->
+        <section id="addMaintenancePage" class="page hidden">
+            <h2>●● Добавяне на сервизна история ●●</h2>
+
+            <!-- <p>
+                <strong>Забележка:</strong>
+                Можеш да добавяш история само на автомобили, които са твои.
+            </p> -->
+            <select id="maintenanceCarSelect"></select>
+
+            <div class="form-row">
+                <input id="serviceDate" type="date">
+                <input id="mileage" type="number" placeholder="Километри">
+            </div>
+
+            <div class="service-types">
+                <p><strong>Вид сервиз:</strong></p>
+
+                <label><input type="checkbox" class="service-checkbox" value="Масло двигател"> Масло двигател</label>
+                <label><input type="checkbox" class="service-checkbox" value="Маслен филтър"> Маслен филтър</label>
+                <label><input type="checkbox" class="service-checkbox" value="Въздушен филтър"> Въздушен филтър</label>
+                <label><input type="checkbox" class="service-checkbox" value="Горивен филтър"> Горивен филтър</label>
+                <label><input type="checkbox" class="service-checkbox" value="Филтър купе"> Филтър купе</label>
+
+                <label>
+                    <input type="checkbox" id="customDescCheckbox" onchange="toggleCustomDescription()">
+                    Друго
+                </label>
+
+                <input id="customDescription"
+                       type="text"
+                       placeholder="Свободно описание"
+                       disabled>
+            </div>
+
+            <input id="cost" type="number" placeholder="Стойност">
+            <input id="nextServiceAt" type="number" placeholder="Следваща смяна (км.)">
+
+            <div id="notice-maintenance-page">
+                <a>
+                    <strong>Забележка:</strong>
+                    Можеш да оставиш празно полето <strong>"следваща смяна"</strong>
+                    за автоматично изчисление.
+                </a>
+                <button class="info-btn" aria-label="Информация" onclick="openInfoMaintenanceModal()">ⓘ</button>
+            </div>
+
+            <button onclick="addMaintenance()">Добави</button>
+        </section>
+
+        <!-- VIEW MAINTENANCE -->
+        <section id="maintenancePage" class="page hidden">
+            <h2>●● Сервизна история ●●</h2>
+
+            <div id="maintenance-header-div">
+                <div id="maintenance-header-inner-div">
+                    <select id="maintenanceViewCarSelect" onchange="loadMaintenanceForSelectedCar()"></select>
+                </div>
+                <button onclick="loadMaintenanceForSelectedCar()">Обнови резултатите</button>
+            </div>
+
+            <table class="maintenance-table">
+                <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Описание</th>
+                        <th>Пробег</th>
+                        <th>Стойност</th>
+                        <th>Следваща смяна</th>
+                    </tr>
+                </thead>
+                <tbody id="maintenanceList"></tbody>
+            </table>
+        </section>
+
+        <!-- QUICK INFO -->
+        <section id="quickInfoPage" class="page hidden">
+            <h2>●● Основна информация ●●</h2>
+
+            <select id="quickInfoCarSelect" onchange="loadQuickInfo()"></select>
+            <div id="currentMileage" class="current-mileage hidden">
+                <div class="mileage-text">
+                    Текущи километри:
+                    <strong><span id="currentMileageValue"></span> км</strong>
+                </div>
+
+                <button id="updateMileageBtn" class="update-mileage-btn" onclick="openMileageModal()">Обнови</button>
+            </div>
+
+            <div id="quickInfoGrid" class="quick-info-grid"></div>
+        </section>
+
+    </main>
+
+    <!-- обновяване на километри popup modal -->
+    <div id="mileageModal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Обновяване на километри</h3>
+
+            <input
+                type="number"
+                id="newMileageInput"
+                placeholder="Въведи нови километри"
+                min="0"
+            />
+
+            <div class="modal-actions">
+                <button onclick="closeMileageModal()">Отказ</button>
+                <button onclick="submitMileageUpdate()">Запази</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- info button add maintenance history -->
+    <div id="infoMaintenanceModal" class="modal hidden">
+        <div class="modal-content">
+            <!-- <h3>Препоръчителни сервизни интервали</h3> -->
+
+            <p>За да поддържате автомобила си в добро състояние, препоръчваме следните сервизни интервали:</p>
+
+            <ul class="maintenance-list">
+                <li>
+                    <strong>На всеки 10 000 км</strong><br>
+                    двигателно масло, маслен филтър
+                </li>
+                <li>
+                    <strong>На всеки 20 000 км</strong><br>
+                    въздушен филтър, филтър купе
+                </li>
+                <li>
+                    <strong>На всеки 30 000 км</strong><br>
+                    горивен филтър
+                </li>
+                <li>
+                    <strong>На всеки ~60 000 км</strong><br>
+                    масло скоростна кутия(автомачна)
+                </li>
+            </ul>
+
+            <p class="maintenance-note">
+                Интервалите са ориентировъчни и могат да варират според начина на шофиране и препоръките на производителя.
+            </p>
+
+            <div class="modal-actions">
+                <button onclick="closeInfoMaintenanceModal()">Затвори</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="auth.js"></script>
+<script src="mainPage.js"></script>
+</body>
+</html>
