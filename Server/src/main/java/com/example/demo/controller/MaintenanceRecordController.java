@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.dto.MaintenanceRequest;
 import com.example.demo.dto.MaintenanceResponse;
 import com.example.demo.dto.MaintenanceUpdateRequest;
-import com.example.demo.model.MaintenanceRecord;
 import com.example.demo.service.MaintenanceService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;

@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+
+@CrossOrigin(origins = "*") //Позволява заявки от ВСИЧКИ домейни към този контролер / метод.
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -54,18 +55,10 @@ public class UserController {
         return service.findById(id);
     }
 
-//    @PutMapping("/{id}")
-//    public UserResponse update(
-//            @PathVariable String id,
-//            @RequestBody CarUpdateRequest request
-//    ) {
-//        return service.update(id, request);
-//    }
-
     @DeleteMapping("/{id}")
     public MessageResponse delete(@PathVariable String id) {
         service.delete(id);
-        return new MessageResponse("Car successfully deleted"); // set message as response
+        return new MessageResponse("User successfully deleted"); // set message as response
     }
 
 }

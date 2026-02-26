@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.auth.AuthHelper;
 import com.example.demo.dto.CarRequest;
 import com.example.demo.dto.CarResponse;
 import com.example.demo.dto.CarUpdateRequest;
@@ -8,41 +9,35 @@ import com.example.demo.service.CarService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
-import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/cars")
 public class CarController {
 
+    private final AuthHelper authHelper;
     private final CarService service;
 
-    public CarController(CarService service) {
+
+    public CarController(CarService service, AuthHelper authHelper) {
         this.service = service;
+        this.authHelper = authHelper;
     }
 
-    /* if we have path /test?id=test&year=test
-    * we can use @RequestParam  instead of
-    * @PathVariable to get params
-    *
-    * example function:
-    * @GetMapping
-    * public List<MaintenanceResponse> getForCar(
-    *   @RequestParam String id, // @RequestParam String id matches ?id=test
-    *   @RequestParam(required = false) Integer year // @RequestParam Integer year matches &year=test
-    *   ) {
-    *       return service.getByCarAndYear(id, year);
-    *   }
-    * */
-
     @PostMapping
-    public CarResponse create(@Valid @RequestBody CarRequest request) {
+    public CarResponse create(
+            @RequestHeader(value = "Authorization") String authHeader,
+            @Valid @RequestBody CarRequest request
+    ) {
+        authHelper.requireAuth(authHeader); // check authorization
         return service.create(request);
     }
 
     @GetMapping
-    public List<CarResponse> getAll() {
+    public List<CarResponse> getAll( @RequestHeader( value = "Authorization") String authHeader ) {
+        authHelper.requireAuth(authHeader);
         return service.findAll();
     }
 
@@ -61,9 +56,18 @@ public class CarController {
 
     @PutMapping("/{id}/mileage")
     public CarResponse updateMileage(
+            @RequestHeader(value = "Authorization", required = false) String authHeader,
             @PathVariable String id,
             @RequestBody CarUpdateRequest request
     ) {
+        /* @RequestHeader(value = "Authorization", required = false) String authHeader
+        * required = false -> allows custom response message.
+        * without required -> throws 400 Bad Request instantly.
+        */
+
+        /* check authorization first */
+        authHelper.requireAuth(authHeader);
+
         return service.update(id, request);
     }
 

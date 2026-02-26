@@ -2,15 +2,15 @@ package com.example.demo.service.impl;
 
 import com.example.demo.dto.*;
 import com.example.demo.exception.NotFoundException;
-import com.example.demo.model.Car;
 import com.example.demo.model.User;
-import com.example.demo.repository.CarRepository;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.service.CarService;
 import com.example.demo.service.UserService;
+import com.example.demo.util.TokenGenerator;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -25,6 +25,19 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /* authentication */
+    @Override
+    public boolean isTokenValid(String rawToken) {
+        if (rawToken == null || rawToken.isBlank()) return false;
+
+        return repository.findAll().stream().anyMatch(u ->
+                u.getAuthTokenHash() != null &&
+                        u.getTokenExpiresAt() != null &&
+                        u.getTokenExpiresAt().isAfter(Instant.now()) &&
+                        passwordEncoder.matches(rawToken, u.getAuthTokenHash())
+        );
+    }
+
     /* login */
     @Override
     public LoginResponse login(LoginRequest request) {
@@ -37,10 +50,19 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Invalid credentials");
         }
 
+        // after successful login - generate new token for authorization
+        String token = TokenGenerator.generateToken();
+        String tokenHash = passwordEncoder.encode(token);
+
+        user.setAuthTokenHash(tokenHash);
+        user.setTokenExpiresAt( Instant.now().plus(365, ChronoUnit.DAYS) ); // one year expiry - could be less
+        repository.save(user); // save to user object
+
         return new LoginResponse(
                 "Login successful",
                 user.getId(),
-                user.getUsername()
+                user.getUsername(),
+                token
         );
     }
 
@@ -79,21 +101,6 @@ public class UserServiceImpl implements UserService {
 
         return toResponse(user);
     }
-
-    /* update car data */
-//    @Override
-//    public UserResponse update(String id, CarUpdateRequest request) {
-//        Car car = repository.findById(id)
-//                .orElseThrow(() -> new NotFoundException("Car not found"));
-//
-//        if (request.getBrand() != null) car.setBrand(request.getBrand());
-//        if (request.getModel() != null) car.setModel(request.getModel());
-//        if (request.getYear() != null) car.setYear(request.getYear());
-//        if (request.getVin() != null) car.setVin(request.getVin());
-//
-//        Car saved = repository.save(car);
-//        return toResponse(saved);
-//    }
 
     /* delete a car */
     @Override

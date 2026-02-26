@@ -23,6 +23,12 @@ public class CarServiceImpl implements CarService {
     /* create a car record */
     @Override
     public CarResponse create(CarRequest request) {
+
+        /* check if car already exists - by VIN */
+        if (repository.existsByVin(request.getVin())) {
+            throw new NotFoundException("Car with this VIN already exists");
+        }
+
         Car car = new Car();
         car.setOwner(request.getOwner());
         car.setBrand(request.getBrand());
@@ -69,21 +75,6 @@ public class CarServiceImpl implements CarService {
         Car saved = repository.save(car);
         return toResponse(saved);
     }
-
-//    /* update car data */
-//    @Override
-//    public CarResponse update(String id, CarUpdateRequest request) {
-//        Car car = repository.findById(id)
-//                .orElseThrow(() -> new NotFoundException("Car not found"));
-//
-//        if (request.getBrand() != null) car.setBrand(request.getBrand());
-//        if (request.getModel() != null) car.setModel(request.getModel());
-//        if (request.getYear() != null) car.setYear(request.getYear());
-//        if (request.getVin() != null) car.setVin(request.getVin());
-//
-//        Car saved = repository.save(car);
-//        return toResponse(saved);
-//    }
 
     /* delete a car */
     @Override
