@@ -1,31 +1,35 @@
-button {
-    min-height: 44px;
-    touch-action: manipulation;
-}
+/* ==========================
+   BASE / MOBILE-FIRST STYLES
+=========================== */
 
+/* Global Reset */
 * {
     box-sizing: border-box;
-}
-
-@media (max-width: 768px) {
-    .app-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .side-menu {
-        width: 100%;
-    }
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    margin: 0;
     font-family: "Segoe UI", Arial, sans-serif;
     background-color: #f4f6f8;
     color: #333;
+    padding-bottom: env(safe-area-inset-bottom);
+    min-height: 100dvh;
 }
 
-body {
-    padding-bottom: env(safe-area-inset-bottom);
+button {
+    min-height: 44px;
+    touch-action: manipulation;
+    padding: 10px 16px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1d4ed8;
 }
 
 /* HEADER */
@@ -50,44 +54,21 @@ body {
     border: none;
     color: white;
     cursor: pointer;
-    margin-right: 15px;
-    margin-top: 15px;
 }
 
 .app-title {
-    font-size: 20px;
-    align-self: center;
+    font-size: 1.25rem;
 }
 
 /* SIDE MENU */
-/* .side-menu {
-    position: fixed;
-    top: 60px;
-    left: 0px;
-    width: 220px;
-    height: calc(100% - 60px);
-    background-color: #111827;
-    color: white;
-    transition: left 0.3s ease;
-    padding-top: 20px;
-    z-index: 999;
-} */
-
 .side-menu {
     position: sticky;
-    top: 0;
+    top: 60px;
     height: auto;
-    width: 220px;
+    width: 100%; /* mobile first: full width */
     background-color: #111827;
     color: white;
     padding-top: 20px;
-}
-
-.app-layout {
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    margin-top: 60px; /* заради fixed header-а */
-    min-height: calc(100vh - 60px);
 }
 
 .side-menu ul {
@@ -105,24 +86,28 @@ body {
     background-color: #1f2933;
 }
 
+/* APP LAYOUT */
+.app-layout {
+    display: grid;
+    grid-template-columns: 1fr; /* mobile: single column */
+    margin-top: 60px;
+    min-height: calc(100vh - 60px);
+}
+
 /* CONTENT */
 .content {
-    /* margin-top: 60px; */
     padding: 20px;
 }
 
 .page {
-    max-width: 900px;
+    max-width: 100%;
     margin: auto;
-}
-
-.hidden {
-    display: none;
 }
 
 /* FORMS */
 .form-row {
     display: flex;
+    flex-direction: column;
     gap: 10px;
     margin-bottom: 10px;
 }
@@ -134,21 +119,6 @@ input {
     border: 1px solid #ccc;
 }
 
-button {
-    padding: 10px 16px;
-    background-color: #2563eb;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-bottom: 20px;
-}
-
-button:hover {
-    background-color: #1d4ed8;
-}
-
-/* LISTS */
 .list {
     list-style: none;
     padding: 0;
@@ -180,13 +150,13 @@ button:hover {
     padding: 8px 10px;
     border-radius: 15px;
     font-size: 16px;
-    margin: 5px;
 }
 
 .delete-btn:hover {
     background: #b91c1c;
 }
 
+/* MAINTENANCE TABLE */
 .maintenance-table {
     width: 100%;
     border-collapse: collapse;
@@ -212,40 +182,10 @@ button:hover {
     background: #f1f5ff;
 }
 
-#maintenanceViewCarSelect, #maintenanceCarSelect, #maintenance-refresh-button {
-    margin-bottom: 10px;
-}
-
-#maintenance-header-div {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-maintenance-header-inner-div {
-    display: inherit;
-    align-items: flex-start;
-}
-
-.car-info {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.car-title {
-    font-weight: 600;
-    font-size: 15px;
-}
-
-.car-owner {
-    font-size: 12px;
-    color: #6b7280; /* gray */
-}
-
+/* QUICK INFO CARDS */
 .quick-info-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: 1fr; /* mobile first: single column */
     gap: 16px;
     margin-top: 20px;
 }
@@ -259,12 +199,12 @@ maintenance-header-inner-div {
 
 .quick-card h3 {
     margin: 0 0 8px 0;
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 .quick-card p {
     margin: 4px 0;
-    font-size: 14px;
+    font-size: 0.875rem;
     color: #555;
 }
 
@@ -273,74 +213,7 @@ maintenance-header-inner-div {
     font-weight: 600;
 }
 
-.current-mileage {
-    margin: 15px 0 20px 0;
-    background-color: #eef2ff;
-    border-left: 4px solid #2563eb;
-    border-radius: 6px;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-}
-
-.current-mileage.hidden {
-    display: none;
-}
-
-/* label + value stay together */
-.mileage-text {
-    display: inline-flex;
-    align-items: center;
-    padding: 10px 8px; /* moved here */
-    gap: 6px;
-}
-
-/* button pushed to the end */
-.update-mileage-btn {
-    margin: 0px; 
-
-    border-radius: 0px 6px 6px 0px;
-    margin-left: auto;
-    font-size: 14px;
-    background-color: #2563eb;
-    color: #fff;
-    cursor: pointer;
-    align-items: center;
-}
-
-
-.update-mileage-btn:hover {
-    background-color: #1e40af;
-}
-
-.service-types {
-    margin: 10px 0;
-}
-
-.service-types label {
-    display: block;
-    margin-bottom: 6px;
-    cursor: pointer;
-}
-
-#customDescription {
-    margin-top: 6px;
-    width: 100%;
-}
-
-#logout-button {
-    cursor: pointer;
-    background: none;
-    font-size: small;
-    border: solid;
-    border-radius: 12px;
-    margin-top: 1rem;
-}
-
-#usernameLabel {
-    margin-right: 10px;
-}
-
+/* MODAL */
 .modal {
     position: fixed;
     inset: 0;
@@ -359,19 +232,11 @@ maintenance-header-inner-div {
     background: white;
     padding: 20px;
     border-radius: 8px;
-    width: 320px;
+    width: 90%;
+    max-width: 400px;
     display: flex;
     flex-direction: column;
     gap: 12px;
-}
-
-.modal-content h3 {
-    margin: 0;
-}
-
-.modal-content input {
-    padding: 8px;
-    font-size: 16px;
 }
 
 .modal-actions {
@@ -380,32 +245,54 @@ maintenance-header-inner-div {
     gap: 10px;
 }
 
-.modal-actions button {
-    padding: 6px 12px;
-    cursor: pointer;
+/* HIDDEN CLASS */
+.hidden {
+    display: none;
 }
 
-@media (max-width: 768px) {
+/* ==========================
+   MEDIA QUERIES (TABLET + DESKTOP)
+=========================== */
 
-    body {
-        padding: 0.5rem;
+/* Tablet */
+@media (min-width: 768px) {
+    .side-menu {
+        width: 220px;
     }
 
-    .container,
-    .content,
-    .main {
-        width: 100%;
-        max-width: 100%;
+    .app-layout {
+        grid-template-columns: 220px 1fr;
     }
 
-    table {
-        width: 100%;
-        display: block;
-        overflow-x: auto;
+    .form-row {
+        flex-direction: row;
+    }
+
+    .quick-info-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     }
 
     button {
-        width: 100%;
-        padding: 0.8rem;
+        width: auto;
+        padding: 10px 16px;
+    }
+}
+
+/* Desktop */
+@media (min-width: 1200px) {
+    .app-layout {
+        grid-template-columns: 250px 1fr;
+    }
+
+    .quick-info-grid {
+        gap: 24px;
+    }
+
+    .modal-content {
+        max-width: 500px;
+    }
+
+    .app-title {
+        font-size: 1.5rem;
     }
 }
