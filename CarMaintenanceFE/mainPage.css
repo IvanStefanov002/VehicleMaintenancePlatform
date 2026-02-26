@@ -1,74 +1,89 @@
-/* ==========================
-   BASE / MOBILE-FIRST STYLES
-=========================== */
-
-/* Global Reset */
+/* ================= GENERAL ================= */
 * {
     box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body, html {
     margin: 0;
     padding: 0;
-}
-
-body {
-    font-family: "Segoe UI", Arial, sans-serif;
+    width: 100%;
+    min-height: 100vh;
     background-color: #f4f6f8;
     color: #333;
-    padding-bottom: env(safe-area-inset-bottom);
-    min-height: 100dvh;
 }
 
-button {
-    min-height: 44px;
-    touch-action: manipulation;
-    padding: 10px 16px;
-    background-color: #2563eb;
+/* Prevent pinch-zoom & ensure proper mobile scaling */
+html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+/* ================= HEADER ================= */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1f2933;
     color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    padding: 0 16px;
+    z-index: 1001;
+}
+
+.app-title {
+    font-size: 18px;
+    line-height: 1.2;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#logout-button {
+    background-color: #2563eb;
+    color: #fff;
     border: none;
+    padding: 6px 12px;
     border-radius: 6px;
     cursor: pointer;
 }
 
-button:hover {
-    background-color: #1d4ed8;
+#logout-button:hover {
+    background-color: #1e40af;
 }
 
-/* HEADER */
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #1f2933;
-    color: white;
-    position: fixed;
-    height: 60px;
-    padding: 0 16px;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
+/* ================= APP LAYOUT ================= */
+/* Mobile-first: side menu overlay */
+.app-layout {
+    display: block;
+    margin-top: 60px; /* header height */
 }
 
-.menu-btn {
-    font-size: 24px;
-    background: none;
-    border: none;
-    color: white;
-    cursor: pointer;
-}
-
-.app-title {
-    font-size: 1.25rem;
-}
-
-/* SIDE MENU */
+/* Side menu */
 .side-menu {
-    position: sticky;
+    position: fixed;
     top: 60px;
-    height: auto;
-    width: 100%; /* mobile first: full width */
+    left: 0;
+    width: 220px;
+    height: 100%;
     background-color: #111827;
     color: white;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1002;
+    overflow-y: auto;
     padding-top: 20px;
+}
+
+.side-menu.open {
+    transform: translateX(0);
 }
 
 .side-menu ul {
@@ -86,77 +101,97 @@ button:hover {
     background-color: #1f2933;
 }
 
-/* APP LAYOUT */
-.app-layout {
-    display: grid;
-    grid-template-columns: 1fr; /* mobile: single column */
-    margin-top: 60px;
-    min-height: calc(100vh - 60px);
+/* Overlay behind menu */
+.menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: none;
+    z-index: 1000;
 }
 
-/* CONTENT */
+.menu-overlay.show {
+    display: block;
+}
+
+/* ================= CONTENT ================= */
 .content {
     padding: 20px;
+    width: 100%;
 }
 
+/* Page wrapper */
 .page {
-    max-width: 100%;
+    max-width: 900px;
     margin: auto;
 }
 
-/* FORMS */
-.form-row {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-input {
-    flex: 1;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-}
-
+/* ================= LISTS ================= */
 .list {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background: white;
     margin-bottom: 8px;
     padding: 12px;
     border-radius: 6px;
-    cursor: pointer;
     box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-
-.list li:hover {
-    background-color: #eef2ff;
-}
-
-.car-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
+    flex-wrap: wrap;
 }
 
 .delete-btn {
-    cursor: pointer;
+    flex-shrink: 0;
     background: #dc2626;
     padding: 8px 10px;
     border-radius: 15px;
-    font-size: 16px;
+    font-size: 14px;
+    color: white;
+    border: none;
+    cursor: pointer;
 }
 
 .delete-btn:hover {
     background: #b91c1c;
 }
 
-/* MAINTENANCE TABLE */
+/* ================= FORMS ================= */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+input, select {
+    flex: 1;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+button {
+    padding: 10px 16px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+button:hover {
+    background-color: #1e40af;
+}
+
+/* ================= TABLES ================= */
 .maintenance-table {
     width: 100%;
     border-collapse: collapse;
@@ -166,15 +201,9 @@ input {
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
-.maintenance-table th {
-    background: #1f2933;
-    color: white;
+.maintenance-table th, .maintenance-table td {
+    padding: 12px;
     text-align: left;
-    padding: 12px;
-}
-
-.maintenance-table td {
-    padding: 12px;
     border-bottom: 1px solid #e5e7eb;
 }
 
@@ -182,10 +211,10 @@ input {
     background: #f1f5ff;
 }
 
-/* QUICK INFO CARDS */
+/* ================= QUICK INFO CARDS ================= */
 .quick-info-grid {
     display: grid;
-    grid-template-columns: 1fr; /* mobile first: single column */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 16px;
     margin-top: 20px;
 }
@@ -197,23 +226,33 @@ input {
     box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
-.quick-card h3 {
-    margin: 0 0 8px 0;
-    font-size: 1rem;
+/* ================= CURRENT MILEAGE ================= */
+.current-mileage {
+    margin: 15px 0 20px;
+    background-color: #eef2ff;
+    border-left: 4px solid #2563eb;
+    border-radius: 6px;
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.quick-card p {
-    margin: 4px 0;
-    font-size: 0.875rem;
-    color: #555;
+.update-mileage-btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    background-color: #2563eb;
+    color: #fff;
+    border: none;
+    cursor: pointer;
 }
 
-.quick-card .missing {
-    color: #dc2626;
-    font-weight: 600;
+.update-mileage-btn:hover {
+    background-color: #1e40af;
 }
 
-/* MODAL */
+/* ================= MODAL ================= */
 .modal {
     position: fixed;
     inset: 0;
@@ -221,7 +260,7 @@ input {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
+    z-index: 1003;
 }
 
 .modal.hidden {
@@ -233,10 +272,15 @@ input {
     padding: 20px;
     border-radius: 8px;
     width: 90%;
-    max-width: 400px;
+    max-width: 320px;
     display: flex;
     flex-direction: column;
     gap: 12px;
+}
+
+.modal-content input {
+    padding: 8px;
+    font-size: 16px;
 }
 
 .modal-actions {
@@ -245,54 +289,26 @@ input {
     gap: 10px;
 }
 
-/* HIDDEN CLASS */
-.hidden {
-    display: none;
-}
-
-/* ==========================
-   MEDIA QUERIES (TABLET + DESKTOP)
-=========================== */
-
-/* Tablet */
+/* ================= MEDIA QUERIES ================= */
 @media (min-width: 768px) {
-    .side-menu {
-        width: 220px;
-    }
-
+    /* Desktop/tablet: side menu visible, content next to it */
     .app-layout {
+        display: grid;
         grid-template-columns: 220px 1fr;
     }
 
-    .form-row {
-        flex-direction: row;
+    .side-menu {
+        position: sticky;
+        transform: none;
+        top: 60px;
+        height: calc(100vh - 60px);
     }
 
-    .quick-info-grid {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    .content {
+        margin-left: 0;
     }
 
     button {
         width: auto;
-        padding: 10px 16px;
-    }
-}
-
-/* Desktop */
-@media (min-width: 1200px) {
-    .app-layout {
-        grid-template-columns: 250px 1fr;
-    }
-
-    .quick-info-grid {
-        gap: 24px;
-    }
-
-    .modal-content {
-        max-width: 500px;
-    }
-
-    .app-title {
-        font-size: 1.5rem;
     }
 }
