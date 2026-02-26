@@ -5,41 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Car Maintenance App</title>
     <link rel="stylesheet" href="mainPage.css">
+    <style>
+        /* ===== hidden helper ===== */
+        .hidden { display: none !important; }
+    </style>
 </head>
 <body>
 
 <!-- ================= HEADER ================= -->
 <header class="header">
-    <button class="menu-btn" onclick="toggleMenu()">☰</button>
-    <h1 class="app-title">
-        🔧 Електронен справочник за поддръжка на автомобили
-    </h1>
+    <h1 class="app-title">🔧 Електронен справочник за поддръжка на автомобили</h1>
 
     <div class="user-info">
         <span id="usernameLabel"></span>
         <button id="logout-button" onclick="logout()">Log Out</button>
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
     </div>
 </header>
+
+<!-- Mobile menu overlay -->
+<div class="menu-overlay hidden" onclick="toggleMenu()"></div>
 
 <!-- ================ MAIN LAYOUT ================ -->
 <div class="app-layout">
 
     <!-- ================ SIDE MENU ================ -->
-    <div class="menu-overlay" onclick="toggleMenu()"></div>
     <nav id="sideMenu" class="side-menu">
         <ul>
-            <li data-section="carsPage">🚗 Автомобили</li>
-            <li data-section="addCarPage">➕ Добавяне на автомобил</li>
+            <li onclick="showSection('carsPage')">🚗 Автомобили</li>
+            <li onclick="showSection('addCarPage')">➕ Добавяне на автомобил</li>
             <b>_________________________________</b>
-            <li data-section="addMaintenancePage">🛠 Добавяне на сервизна история</li>
-            <li data-section="maintenancePage">📋 Сервизни истории</li>
-            <li data-section="quickInfoPage">ℹ️ Основна информация</li>
+            <li onclick="showSection('addMaintenancePage')">🛠 Добавяне на сервизна история</li>
+            <li onclick="showSection('maintenancePage')">📋 Сервизни истории</li>
+            <li onclick="showSection('quickInfoPage')">ℹ️ Основна информация</li>
         </ul>
     </nav>
 
     <!-- ================= CONTENT ================= -->
     <main class="content">
-
         <!-- CARS LIST -->
         <section id="carsPage" class="page">
             <h2>--Автомобили--</h2>
@@ -49,72 +52,48 @@
         <!-- ADD CAR -->
         <section id="addCarPage" class="page hidden">
             <h2>--Добавяне на автомобил--</h2>
-
             <div class="form-row">
                 <input id="brand" placeholder="Марка">
                 <input id="model" placeholder="Модел">
             </div>
-
             <div class="form-row">
                 <input id="year" type="number" placeholder="Година на производство">
-                <input id="carMileage" placeholder="Киометри">
+                <input id="carMileage" placeholder="Километри">
                 <input id="vin" placeholder="VIN">
             </div>
-
             <button onclick="addCar()">Добави</button>
         </section>
 
         <!-- ADD MAINTENANCE -->
         <section id="addMaintenancePage" class="page hidden">
             <h2>--Добавяне на сервизна история--</h2>
-
-            <p>
-                <strong>Забележка:</strong>
-                Можеш да добавяш история само на автомобили, които са твои.
-            </p>
+            <p><strong>Забележка:</strong> Можеш да добавяш история само на автомобили, които са твои.</p>
             <a>Избери автомобил: </a><select id="maintenanceCarSelect"></select>
-
             <div class="form-row">
                 <input id="serviceDate" type="date">
-                <input id="mileage" type="number" placeholder="Киометри">
+                <input id="mileage" type="number" placeholder="Километри">
             </div>
-
             <div class="service-types">
                 <p><strong>Вид сервиз:</strong></p>
-
                 <label><input type="checkbox" class="service-checkbox" value="Масло двигател"> Масло двигател</label>
                 <label><input type="checkbox" class="service-checkbox" value="Маслен филтър"> Маслен филтър</label>
                 <label><input type="checkbox" class="service-checkbox" value="Въздушен филтър"> Въздушен филтър</label>
                 <label><input type="checkbox" class="service-checkbox" value="Горивен филтър"> Горивен филтър</label>
                 <label><input type="checkbox" class="service-checkbox" value="Филтър купе"> Филтър купе</label>
-
                 <label>
-                    <input type="checkbox" id="customDescCheckbox" onchange="toggleCustomDescription()">
-                    Друго
+                    <input type="checkbox" id="customDescCheckbox" onchange="toggleCustomDescription()"> Друго
                 </label>
-
-                <input id="customDescription"
-                       type="text"
-                       placeholder="Свободно описание"
-                       disabled>
+                <input id="customDescription" type="text" placeholder="Свободно описание" disabled>
             </div>
-
             <input id="cost" type="number" placeholder="Стойност">
             <input id="nextServiceAt" type="number" placeholder="Следваща смяна (км.)">
-
-            <p>
-                <strong>Забележка:</strong>
-                Можеш да оставиш празно полето <strong>"следваща смяна"</strong>
-                за автоматично изчисление.
-            </p>
-
+            <p><strong>Забележка:</strong> Можеш да оставиш празно полето <strong>"следваща смяна"</strong> за автоматично изчисление.</p>
             <button onclick="addMaintenance()">Добави</button>
         </section>
 
         <!-- VIEW MAINTENANCE -->
         <section id="maintenancePage" class="page hidden">
             <h2>--Сервизна история--</h2>
-
             <div id="maintenance-header-div">
                 <div id="maintenance-header-inner-div">
                     <a>Избери автомобил: </a>
@@ -122,7 +101,6 @@
                 </div>
                 <button onclick="loadMaintenanceForSelectedCar()">Обнови резултатите</button>
             </div>
-
             <table class="maintenance-table">
                 <thead>
                     <tr>
@@ -140,43 +118,44 @@
         <!-- QUICK INFO -->
         <section id="quickInfoPage" class="page hidden">
             <h2>--Основна информация--</h2>
-
             <select id="quickInfoCarSelect" onchange="loadQuickInfo()"></select>
             <div id="currentMileage" class="current-mileage hidden">
                 <div class="mileage-text">
-                    Текущи километри:
-                    <strong><span id="currentMileageValue"></span> км</strong>
+                    Текущи километри: <strong><span id="currentMileageValue"></span> км</strong>
                 </div>
-
                 <button id="updateMileageBtn" class="update-mileage-btn" onclick="openMileageModal()">Обнови</button>
             </div>
-
             <div id="quickInfoGrid" class="quick-info-grid"></div>
         </section>
-
     </main>
-
-    <!-- обновяване на киометри popup modal -->
-    <div id="mileageModal" class="modal hidden">
-        <div class="modal-content">
-            <h3>Обновяване на километри</h3>
-
-            <input
-                type="number"
-                id="newMileageInput"
-                placeholder="Въведи нови километри"
-                min="0"
-            />
-
-            <div class="modal-actions">
-                <button onclick="closeMileageModal()">Отказ</button>
-                <button onclick="submitMileageUpdate()">Запази</button>
-            </div>
-        </div>
-    </div>
 
 </div>
 
+<!-- обновяване на километри popup modal -->
+<div id="mileageModal" class="modal hidden">
+    <div class="modal-content">
+        <h3>Обновяване на километри</h3>
+        <input type="number" id="newMileageInput" placeholder="Въведи нови километри" min="0" />
+        <div class="modal-actions">
+            <button onclick="closeMileageModal()">Отказ</button>
+            <button onclick="submitMileageUpdate()">Запази</button>
+        </div>
+    </div>
+</div>
+
 <script src="mainPage.js"></script>
+<script>
+    // ================= NAVIGATION =================
+    function toggleMenu() {
+        document.getElementById("sideMenu").classList.toggle("open");
+        document.querySelector(".menu-overlay").classList.toggle("hidden");
+    }
+
+    function showSection(id) {
+        document.querySelectorAll(".page").forEach(p => p.classList.add("hidden"));
+        document.getElementById(id).classList.remove("hidden");
+        if(window.innerWidth < 768) toggleMenu();
+    }
+</script>
 </body>
 </html>
